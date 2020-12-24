@@ -3,6 +3,8 @@
 require 'connect/db.php';
 require 'core/load.php';
 
+// Sign Up Script
+
 if (isset($_POST['first-name']) && !empty($_POST['first-name'])) {
     $upFirst = $_POST['first-name'];
     $upLast = $_POST['last-name'];
@@ -106,6 +108,53 @@ if (isset($_POST['first-name']) && !empty($_POST['first-name'])) {
     }
 }
 
+// Sign In Script
+
+if (isset($_POST['in-email-mobile']) && !empty($_POST['in-email-mobile'])) {
+    $email_mobile = $_POST['in-email-mobile'];
+    $in_pass = $_POST['in-pass'];
+
+    if (!preg_match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^', $email_mobile)) {
+        if (!preg_match('^[0-9]{11}^', $email_mobile)) {
+            $error = "Invalid email or mobile number. Try again.";
+        } else {
+            if (DB::query("SELECT mobile FROM users WHERE mobile = :mobile", array(':mobile' => $email_mobile))) {
+                if (password_verify($in_pass, DB::query('SELECT password FROM users WHERE mobile = :mobile', array(':mobile' => $email_mobile))[0]['password'])) {
+
+                    $user_id = DB::query('SELECT user_id from users WHERE mobile = :mobile', array(':mobile' => $email_mobile))[0]['user_id'];
+
+                    $tstrong = true;
+                    $token = bin2hex(openssl_random_pseudo_bytes(64, $tstrong));
+                    $loadFromUser->create('token', array('token' => $token, 'user_id' => $user_id));
+                    setcookie('FBID', $token, time() + 60 * 60 * 24 * 7, '/', NULL, NULL, true);
+                    header('Location: index.php');
+                } else {
+                    $error = "Incorrect Password";
+                }
+            } else {
+                $error = "Mobile is incorrect! Check email properly";
+            }
+        }
+    } else {
+        if (DB::query("SELECT email FROM users WHERE email = :email", array(':email' => $email_mobile))) {
+            if (password_verify($in_pass, DB::query('SELECT password FROM users WHERE email = :email', array(':email' => $email_mobile))[0]['password'])) {
+
+                $user_id = DB::query('SELECT user_id from users WHERE email = :email', array(':email' => $email_mobile))[0]['user_id'];
+
+                $tstrong = true;
+                $token = bin2hex(openssl_random_pseudo_bytes(64, $tstrong));
+                $loadFromUser->create('token', array('token' => $token, 'user_id' => $user_id));
+                setcookie('FBID', $token, time() + 60 * 60 * 24 * 7, '/', NULL, NULL, true);
+                header('Location: index.php');
+            } else {
+                $error = "Incorrect Password";
+            }
+        } else {
+            $error = "Email is incorrect! Check email properly";
+        }
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -119,7 +168,25 @@ if (isset($_POST['first-name']) && !empty($_POST['first-name'])) {
 </head>
 
 <body>
-    <div class="header"></div>
+    <div class="header">
+        <div class="logo">facebook-clone</div>
+        <form action="sign.php" method="post">
+            <div class="sign-in-form">
+                <div class="mobile-input">
+                    <div class="input-text">Email or Phone</div>
+                    <input type="text" name="in-email-mobile" id="email-mobile" class="input-text-field">
+                </div>
+                <div class="password-input">
+                    <div style="font-size: 12px; padding-bottom: 5px">Password</div>
+                    <input type="password" name="in-pass" id="in-password" class="input-text-field">
+                    <div class="forgotten-acc">Forgotten Account?</div>
+                </div>
+                <div class="login-button">
+                    <input type="submit" value="Log In" class="sign-in login">
+                </div>
+            </div>
+        </form>
+    </div>
     <div class="main">
         <div class="left-side">
             <img src="assets/image/facebook%20Signin%20image.png" alt="">
