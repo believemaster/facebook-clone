@@ -1,12 +1,13 @@
 <?php
 
+require 'connect/db.php';
 require 'core/load.php';
 
 if (isset($_POST['first-name']) && !empty($_POST['first-name'])) {
     $upFirst = $_POST['first-name'];
     $upLast = $_POST['last-name'];
     $upEmailMobile = $_POST['email-mobile'];
-    $password = $_POST['up-password'];
+    $upPassword = $_POST['up-password'];
     $birthDay = $_POST['birth-day'];
     $birthMonth = $_POST['birth-month'];
     $birthYear = $_POST['birth-year'];
@@ -18,23 +19,91 @@ if (isset($_POST['first-name']) && !empty($_POST['first-name'])) {
     if (empty($upFirst) or empty($upLast) or empty($upEmailMobile) or empty($upGen)) {
         $error = 'All Fields Are Required';
     } else {
-        $first_name = $loadFromUser->checkInput($first_name);
-        $last_name = $loadFromUser->checkInput($last_name);
-        $email_mobile = $loadFromUser->checkInput($email_mobile);
-        $password = $loadFromUser->checkInput($password);
+        $first_name = $loadFromUser->checkInput($upFirst);
+        $last_name = $loadFromUser->checkInput($upLast);
+        $email_mobile = $loadFromUser->checkInput($upEmailMobile);
+        $password = $loadFromUser->checkInput($upPassword);
         $screenName = '' . $first_name . '_' . $last_name . '';
         if (DB::query(
-            "SELECT screenName FROM users WHERE screenName = :screenName",
-            array(":screenName" => $screenName);
+            'SELECT screenName FROM users WHERE screenName = :screenName',
+            array(':screenName' => $screenName)
         )) {
             $screenRand = rand();
-            $userLink = ''.$screenName.''.$screenRand.'';
+            $userLink = '' . $screenName . '' . $screenRand . '';
         } else {
-            $screenLink =  $screenName;
+            $userLink =  $screenName;
+        }
+
+        if (!preg_match("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^", $email_mobile)) {
+            if (!preg_match("^[0-9]{11}^", $email_mobile)) {
+                $error = "Email id or Mobile number are not correct, please try again.";
+            } else {
+                $mob = strlen((string)$email_mobile);
+
+                if ($mob > 11 || $mob < 11) {
+                    $error = "Mobile number is not valid";
+                } else if (strlen($password) < 5 || strlen($password) > 60) {
+                    $error = "Password must be within 5 to 60 characters";
+                } else {
+                    if (DB::query('SELECT mobile FROM users WHERE mobile = :mobile', array(':mobile' => $email_mobile))) {
+                        $error = 'Mobile number is already in use';
+                    } else {
+                        $user_id = $loadFromUser->$loadFromUser->create(
+                            'users',
+                            array(
+                                'first_name' => $first_name,
+                                'last_name' => $last_name,
+                                'mobile' => $email_mobile,
+                                'password' => password_hash($password, PASSWORD_BCRYPT),
+                                'screenName' => $screenName,
+                                'userLink' => $userLink,
+                                'birthday' => $birth,
+                                'gender' => $upGen
+                            )
+                        );
+
+                        $tstrong = true;
+                        $token = bin2hex(openssl_random_pseudo_bytes(64, $tstrong));
+                        $loadFromUser->create('token', array('token' => $token, 'user_id' => $user_id));
+                        setcookie('FBID', $token, time() + 60 * 60 * 24 * 7, '/', NULL, NULL, true);
+                        header('Location: index.php');
+                    }
+                }
+            }
+        } else {
+            if (!filter_var($email_mobile)) {
+                $error = "Invalid email format.";
+            } else if (strlen($first_name) > 20) {
+                $error = "Name must be in 2-20 characters.";
+            } else if (strlen($password) < 8 && strlen($password) >= 60) {
+                $error = "The password must be 8-60 characters.";
+            } else {
+                if (filter_var($email_mobile, FILTER_VALIDATE_EMAIL) && $loadFromUser->checkEmail($email_mobile) === true) {
+                    $error = "Email id already exists.";
+                } else {
+                    $user_id = $loadFromUser->create(
+                        'users',
+                        array(
+                            'first_name' => $first_name,
+                            'last_name' => $last_name,
+                            'email' => $email_mobile,
+                            'password' => password_hash($password, PASSWORD_BCRYPT),
+                            'screenName' => $screenName,
+                            'userLink' => $userLink,
+                            'birthday' => $birth,
+                            'gender' => $upGen
+                        )
+                    );
+
+                    $tstrong = true;
+                    $token = bin2hex(openssl_random_pseudo_bytes(64, $tstrong));
+                    $loadFromUser->create('token', array('token' => $token, 'user_id' => $user_id));
+                    setcookie('FBID', $token, time() + 60 * 60 * 24 * 7, '/', NULL, NULL, true);
+                    header('Location: index.php');
+                }
+            }
         }
     }
-} else {
-    echo "No User Found";
 }
 
 ?>
@@ -74,7 +143,7 @@ if (isset($_POST['first-name']) && !empty($_POST['first-name'])) {
                         <input type="text" name="email-mobile" id="up-email" placeholder="Mobile number or email id" class="text-input">
                     </div>
                     <div class="sign-up-password">
-                        <input type="password" name="up-password" id="up-password" class="text-input">
+                        <input type="password" name="up-password" id="up-password" placeholder="Password" class="text-input">
                     </div>
                     <div class="sign-up-birthday">
                         <div class="bday">Birthday</div>

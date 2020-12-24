@@ -1,6 +1,6 @@
 <?php
 
-$hostDetails = 'mysql:127.0.0.1; dbname = facebook_clone; charset = utf8mb4';
+$hostDetails = 'mysql:host=127.0.0.1; dbname=facebook_clone; charset = utf8mb4';
 $userAdmin = 'root';
 $password = '';
 
