@@ -49,4 +49,22 @@ class User
             return $this->pdo->lastInsertId();
         }
     }
+
+    public function userIdByUsername($username)
+    {
+        $stmt = $this->pdo->prepare('SELECT user_id FROM users WHERE userLink = :username');
+        $stmt->bindparam(':username', $username, PDO::PARAM_STR);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_OBJ);
+
+        return $user->user_id;
+    }
+
+    public function userData($profileId)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM users LEFT JOIN profile ON users.user_id = profile.userId WHERE users.user_id = :user_id");
+        $stmt->bindParam(':user_id', $profileId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
 }

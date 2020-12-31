@@ -64,9 +64,11 @@ if (isset($_POST['first-name']) && !empty($_POST['first-name'])) {
                             )
                         );
 
+                        $loadFromUser->create('profile', array('userId' => $user_id, 'birthday' => $birth, 'firstName' => $first_name, 'lastName' => $last_name, 'profilePic' => 'assets/image/defaultProfile.png', 'coverPic' => 'assets/image/defaultCover.png', 'gender' => $upGen));
+
                         $tstrong = true;
                         $token = bin2hex(openssl_random_pseudo_bytes(64, $tstrong));
-                        $loadFromUser->create('token', array('token' => $token, 'user_id' => $user_id));
+                        $loadFromUser->create('token', array('token' => sha1($token), 'user_id' => $user_id));
                         setcookie('FBID', $token, time() + 60 * 60 * 24 * 7, '/', NULL, NULL, true);
                         header('Location: index.php');
                     }
@@ -97,9 +99,11 @@ if (isset($_POST['first-name']) && !empty($_POST['first-name'])) {
                         )
                     );
 
+                    $loadFromUser->create('profile', array('userId' => $user_id, 'birthday' => $birth, 'firstName' => $first_name, 'lastName' => $last_name, 'profilePic' => 'assets/image/defaultProfile.png', 'coverPic' => 'assets/image/defaultCover.png', 'gender' => $upGen));
+
                     $tstrong = true;
                     $token = bin2hex(openssl_random_pseudo_bytes(64, $tstrong));
-                    $loadFromUser->create('token', array('token' => $token, 'user_id' => $user_id));
+                    $loadFromUser->create('token', array('token' => sha1($token), 'user_id' => $user_id));
                     setcookie('FBID', $token, time() + 60 * 60 * 24 * 7, '/', NULL, NULL, true);
                     header('Location: index.php');
                 }
@@ -125,7 +129,7 @@ if (isset($_POST['in-email-mobile']) && !empty($_POST['in-email-mobile'])) {
 
                     $tstrong = true;
                     $token = bin2hex(openssl_random_pseudo_bytes(64, $tstrong));
-                    $loadFromUser->create('token', array('token' => $token, 'user_id' => $user_id));
+                    $loadFromUser->create('token', array('token' => sha1($token), 'user_id' => $user_id));
                     setcookie('FBID', $token, time() + 60 * 60 * 24 * 7, '/', NULL, NULL, true);
                     header('Location: index.php');
                 } else {
@@ -143,7 +147,7 @@ if (isset($_POST['in-email-mobile']) && !empty($_POST['in-email-mobile'])) {
 
                 $tstrong = true;
                 $token = bin2hex(openssl_random_pseudo_bytes(64, $tstrong));
-                $loadFromUser->create('token', array('token' => $token, 'user_id' => $user_id));
+                $loadFromUser->create('token', array('token' => sha1($token), 'user_id' => $user_id));
                 setcookie('FBID', $token, time() + 60 * 60 * 24 * 7, '/', NULL, NULL, true);
                 header('Location: index.php');
             } else {
