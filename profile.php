@@ -211,7 +211,25 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
             });
 
             $('#cover-upload').on('change', function() {
-                alert('Cover Photo');
+                var name = $('#cover-upload').val().split('\\').pop();
+                var file_data = $('#cover-upload').prop('files')[0];
+                var file_size = file_data['size'];
+                var file_type = file_data["type"].split('/').pop();
+
+                var userid = '<?php echo $userid; ?>';
+                var imgName = 'user/' + userid + '/coverphoto/' + name + '';
+
+                var form_data = new FormData();
+                form_data.append('file', file_data);
+
+                if (name != '') {
+                    $.post('http://localhost/facebook/core/ajax/profile.php', {
+                        imgName: imgName,
+                        userid: userid
+                    }, function(data) {
+                        alert(data);
+                    })
+                }
             })
 
             $(document).mouseup(function(e) {
