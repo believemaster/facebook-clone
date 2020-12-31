@@ -294,7 +294,7 @@ input #main-search {
 }
 
 .add-cover-photo {
-  font-size: 12px;
+  font-size: 13px;
   color: white;
   display: inline-flex;
   justify-content: center;
@@ -309,9 +309,9 @@ input #main-search {
 .add-cov-opt {
   margin-left: 10px;
   margin-top: -10px;
-  font-size: 12px;
+  font-size: 13px;
   position: absolute;
-  padding: 10px 15px;
+  padding: 10px 32px;
   box-shadow: 0 0 20px black;
   background-color: white;
   border-radius: 2px;
@@ -331,6 +331,7 @@ label.file-upload-label {
   color: #000;
   border-radius: 0.4em;
   transition: background 0.3s;
+  cursor: pointer;
 }
 
 .file-upload-input {
@@ -347,4 +348,8 @@ label.file-upload-label {
 
 .add-cover-text {
   margin-left: 5px;
+}
+
+.select-cover-photo {
+  margin-bottom: 10px;
 }

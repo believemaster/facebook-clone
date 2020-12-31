@@ -203,7 +203,29 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
             <div id="adv_demo"></div>
         </div>
     </main>
+    <script src="assets/js/jquery.js"></script>
+    <script>
+        $(function() {
+            $('.add-cover-photo').on('click', function() {
+                $('.add-cov-opt').toggle();
+            });
 
+            $('#cover-upload').on('change', function() {
+                alert('Cover Photo');
+            })
+
+            $(document).mouseup(function(e) {
+                var container = new Array();
+                container.push($('.add-cov-opt'));
+
+                $.each(container, function(key, value) {
+                    if (!$(value).is(e.target) && $(value).has(e.target).length === 0) {
+                        $(value).hide();
+                    }
+                })
+            })
+        });
+    </script>
 </body>
 
 </html>
