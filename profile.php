@@ -48,9 +48,9 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
             </div>
             <div class="top-right-part">
                 <div class="top-pic-name-wrap">
-                    <a href="profile.php?username=<?php echo $profileData->userLink; ?>" class="top-pic-name">
-                        <div class="top-pic"><img src="<?php echo $profileData->profilePic; ?>" alt=""></div>
-                        <span class="top-name top-css border-left"><?php echo $profileData->firstName; ?></span>
+                    <a href="profile.php?username=<?php echo $userData->userLink; ?>" class="top-pic-name">
+                        <div class="top-pic"><img src="<?php echo $userData->profilePic; ?>" alt=""></div>
+                        <span class="top-name top-css border-left"><?php echo $userData->firstName; ?></span>
                     </a>
                 </div>
                 <a href="index.php">
@@ -190,6 +190,25 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
                                 </div>
                             </div>
                         </div>
+                        <div class="cover-photo-rest-wrap">
+                            <div class="profile-pic-name">
+                                <div class="profile-pic">
+                                    <?php if ($profileId == $userid) { ?>
+                                        <div class="profile-pic-upload">
+                                            <div class="add-pro">
+                                                <img src="assets/image/profile/uploadCoverPhoto.jpg" alt="">
+                                                <div>Update</div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                    <img src="<?php echo $profileData->profilePic; ?>" alt="" class="profile-pic-me">
+                                </div>
+                                <div class="profile-name">
+                                    <?php echo '' . $profileData->first_name . " " . $profileData->last_name . '' ?>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="cover-bottom-part"></div>
