@@ -218,13 +218,16 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
                 </div>
             </div>
             <div class="profile-right-wrap"></div>
-            <div class="top-box-shadow"></div>
+            <div class="top-box-show"></div>
             <div id="adv_demo"></div>
         </div>
     </main>
     <script src="assets/js/jquery.js"></script>
     <script>
         $(function() {
+            $('.profile-pic-upload').on('click', function() {
+                $('.top-box-show').html('<div class="top-box align-vertical-middle profile-dialoge-show"> <div class="profile-pic-upload-action"> <div class="pro-pic-up"> <div class="file-upload"> <label for="profile-upload" class="file-upload-label"> <span class="upload-plus-text align-middle"><span class="upload-plus-sign">+</span>Upload Photo</span> </label> <input type="file" name="file-upload" id="profile-upload" class="file-upload-input"> </div> </div> <div class="pro-pic-choose"></div> </div> </div>')
+            });
             $('.add-cover-photo').on('click', function() {
                 $('.add-cov-opt').toggle();
             });
@@ -267,6 +270,7 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
             $(document).mouseup(function(e) {
                 var container = new Array();
                 container.push($('.add-cov-opt'));
+                container.push($('.profile-dialoge-show'));
 
                 $.each(container, function(key, value) {
                     if (!$(value).is(e.target) && $(value).has(e.target).length === 0) {
