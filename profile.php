@@ -170,57 +170,103 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
     <main>
         <div class="main-area">
             <div class="profile-left-wrap">
-                <div class="profile-cover-wrap">
-                    <div class="profile-cover-wrap" style="background-image: url(<?php echo $profileData->coverPic; ?>);">
-                        <div class="upload-cov-opt-wrap">
-                            <?php if ($profileId == $userid) { ?>
-                                <div class="add-cover-photo">
-                                    <img src="assets/image/profile/uploadCoverPhoto.jpg" alt="">
-                                    <div class="add-cover-text">Add a cover photo</div>
-                                </div>
-                            <?php } else { ?>
-                                <div class="dont-add-cover-photo"></div>
-                            <?php } ?>
+                <div class="profile-cover-wrap" style="background-image: url(<?php echo $profileData->coverPic; ?>);">
+                    <div class="upload-cov-opt-wrap">
+                        <?php if ($profileId == $userid) { ?>
+                            <div class="add-cover-photo">
+                                <img src="assets/image/profile/uploadCoverPhoto.jpg" alt="">
+                                <div class="add-cover-text">Add a cover photo</div>
+                            </div>
+                        <?php } else { ?>
+                            <div class="dont-add-cover-photo"></div>
+                        <?php } ?>
 
-                            <div class="add-cov-opt">
-                                <div class="select-cover-photo">Select Photo</div>
-                                <div class="file-upload">
-                                    <label for="cover-upload" class="file-upload-label">Upload Photo</label>
-                                    <input type="file" name="file-upload" id="cover-upload" class="file-upload-input">
-                                </div>
+                        <div class="add-cov-opt">
+                            <div class="select-cover-photo">Select Photo</div>
+                            <div class="file-upload">
+                                <label for="cover-upload" class="file-upload-label">Upload Photo</label>
+                                <input type="file" name="file-upload" id="cover-upload" class="file-upload-input">
                             </div>
                         </div>
-                        <div class="cover-photo-rest-wrap">
-                            <div class="profile-pic-name">
-                                <div class="profile-pic">
-                                    <?php if ($profileId == $userid) { ?>
-                                        <div class="profile-pic-upload">
-                                            <div class="add-pro">
-                                                <img src="assets/image/profile/uploadCoverPhoto.jpg" alt="">
-                                                <div>Update</div>
-                                            </div>
+                    </div>
+                    <div class="cover-photo-rest-wrap">
+                        <div class="profile-pic-name">
+                            <div class="profile-pic">
+                                <?php if ($profileId == $userid) { ?>
+                                    <div class="profile-pic-upload">
+                                        <div class="add-pro">
+                                            <img src="assets/image/profile/uploadCoverPhoto.jpg" alt="">
+                                            <div>Update</div>
                                         </div>
-                                    <?php } ?>
-                                    <img src="<?php echo $profileData->profilePic; ?>" alt="" class="profile-pic-me">
-                                </div>
-                                <div class="profile-name">
-                                    <?php echo '' . $profileData->first_name . " " . $profileData->last_name . '' ?>
-                                </div>
+                                    </div>
+                                <?php } ?>
+                                <img src="<?php echo $profileData->profilePic; ?>" alt="" class="profile-pic-me">
+                            </div>
+                            <div class="profile-name">
+                                <?php echo '' . $profileData->first_name . " " . $profileData->last_name . '' ?>
                             </div>
                         </div>
+                    </div>
 
+                </div>
+                <div class="cover-bottom-part">
+                    <div class="timeline-button align-middle cover-but-css" data-userid="<?php echo $userid; ?>" data-profileid="<?php echo $profileId; ?>">
+                        Timeline
+                    </div>
+                    <div class="about-button align-middle cover-but-css" data-userid="<?php echo $userid; ?>" data-profileid="<?php echo $profileId; ?>">
+                        About
+                    </div>
+                    <div class="friends-button align-middle cover-but-css" data-userid="<?php echo $userid; ?>" data-profileid="<?php echo $profileId; ?>">
+                        Friends
+                    </div>
+                    <div class="photos-button align-middle cover-but-css" data-userid="<?php echo $userid; ?>" data-profileid="<?php echo $profileId; ?>">
+                        Photos
                     </div>
                 </div>
-                <div class="cover-bottom-part"></div>
                 <div class="bio-timeline">
-                    <div class="bio-wrap"></div>
+                    <div class="bio-wrap">
+                        <div class="bio-intro">
+                            <div class="intro-wrap">
+                                <img src="assets/image/profile/intro.jpg" alt="">
+                                <div>Intro</div>
+                            </div>
+                            <div class="intro-icon-text">
+                                <img src="assets/image/profile/addBio.jpg" alt="">
+                                <div class="add-bio-text">
+                                    Add a short bio to tell people about yourself.
+                                </div>
+                                <div class="add-bio-click"><a href="">Add Bio</a></div>
+                            </div>
+                            <div class="bio-details">
+                                <div class="bio-1">
+                                    <img src="assets/image/profile/livesIn.jpg" alt="">
+                                    <div class="live-text">Lives In <span class="live-text-css blue">New Delhi, India</span></div>
+                                </div>
+                                <div class="bio-2">
+                                    <img src="assets/image/profile/followedBy.jpg" alt="">
+                                    <div class="live-text">Followed By <span class="followed-text-css blue">65 People</span></div>
+                                </div>
+                            </div>
+                            <div class="bio-feature">
+                                <img src="assets/image/profile/feature.jpg" alt="">
+                                <div class="feat-text">
+                                    Showcase what's important to you by adding people, pages, groups and more to your feature section on your public profile.
+                                </div>
+                                <div class="add-feature blue">Add to featured</div>
+                                <div class="add-feature-link blue">
+                                    <div class="link-plus">+</div>
+                                    <div>Add Instagram, Website and other links</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="status-timeline-wrap"></div>
                 </div>
             </div>
             <div class="profile-right-wrap"></div>
-            <div class="top-box-show"></div>
-            <div id="adv_demo"></div>
         </div>
+        <div class="top-box-show"></div>
+        <div id="adv_demo"></div>
     </main>
     <script src="assets/js/jquery.js"></script>
     <script>
