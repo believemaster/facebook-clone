@@ -260,7 +260,48 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
                             </div>
                         </div>
                     </div>
-                    <div class="status-timeline-wrap"></div>
+                    <div class="status-timeline-wrap">
+                        <?php if ($profileId == $userid) { ?>
+                            <div class="profile-status-write">
+                                <div class="status-wrap">
+                                    <div class="status-top-wrap">
+                                        <div class="status-top">
+                                            Create Post
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="status-med">
+                                    <div class="status-prof">
+                                        <div class="top-pic">
+                                            <img src="<?php echo $userData->profilePic; ?>" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="status-prof-textarea">
+                                        <textarea name="textStatus" id="statusEmoji" cols="5" rows="5" class="status align-middle"></textarea>
+                                    </div>
+                                </div>
+                                <div class="status-bot">
+                                    <div class="file-upload-remIm">
+                                        <label for="multiple_files" class="file-upload-label">
+                                            <div class="status-bot-1">
+                                                <img src="assets/image/photo.jpg" alt="">
+                                                <div class="status-bot-text">Photo/Video</div>
+                                            </div>
+                                        </label>
+                                        <input type="file" name="file-upload" id="multiple_files" class="file-upload-input" data-multiple-caption="{count} files selected" multiple="">
+                                    </div>
+                                    <div class="status-bot-1">
+                                        <img src="assets/image/tag.jpg" alt="">
+                                        <div class="status-bot-text">Tag Friends</div>
+                                    </div>
+                                    <div class="status-bot-1">
+                                        <img src="assets/image/activities.jpg" alt="">
+                                        <div class="status-bottom-text">Feeling/Activities</div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
                 </div>
             </div>
             <div class="profile-right-wrap"></div>
