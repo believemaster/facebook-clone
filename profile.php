@@ -24,6 +24,7 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/dist/emojionearea.min.css">
     <title>Profile</title>
 </head>
 
@@ -277,7 +278,7 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
                                         </div>
                                     </div>
                                     <div class="status-prof-textarea">
-                                        <textarea name="textStatus" id="statusEmoji" cols="5" rows="5" class="status align-middle"></textarea>
+                                        <textarea name="textStatus" id="statusEmoji" cols="5" rows="5" class="status align-middle" placeholder="What's in your mind ?"></textarea>
                                     </div>
                                 </div>
                                 <div class="status-bot">
@@ -298,6 +299,47 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
                                         <img src="assets/image/activities.jpg" alt="">
                                         <div class="status-bottom-text">Feeling/Activities</div>
                                     </div>
+                                    <div class="status-bot-1 dott">...</div>
+                                </div>
+                                <ul id="sortable"></ul>
+                                <div class="newsFeed-privacy">
+                                    <div class="newsFeed">
+                                        <div class="right-sign-icon">
+                                            <img src="assets/image/profile/rightSign.jpg" alt="">
+                                        </div>
+                                        <div class="newsfeed-icon align-middle">
+                                            <img src="assets/image/profile/newsFeed.jpg" alt="">
+                                        </div>
+                                        <div class="newsfeed-text">
+                                            News Feed
+                                        </div>
+                                    </div>
+                                    <div class="status-privacy-wrap">
+                                        <div class="status-privacy">
+                                            <div class="privacy-icon align-middle">
+                                                <img src="assets/image/profile/publicIcon.jpg" alt="">
+                                            </div>
+                                            <div class="privacy-text">Public</div>
+                                            <div class="privacy-downarrow-icon align-middle">
+                                                <img src="assets/image/downArrowGray.jpg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="status-privacy-option">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="seemore-sharebutton">
+                                    <div class="share-seemore-option">
+                                        <div class="privacy-downarrow-icon align-middle">
+                                            <img src="assets/image/downArrowGray.jpg" alt="">
+                                            <span class="status-seemore">See More</span>
+                                        </div>
+                                    </div>
+                                    <div class="status-share-button align-middle">
+                                        Share
+                                    </div>
                                 </div>
                             </div>
                         <?php } ?>
@@ -310,6 +352,7 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
         <div id="adv_demo"></div>
     </main>
     <script src="assets/js/jquery.js"></script>
+    <script src="assets/dist/emojionearea.min.js"></script>
     <script>
         $(function() {
             $('.profile-pic-upload').on('click', function() {
@@ -380,9 +423,14 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
                     type: 'post',
                     success: function(data) {
                         $('.profile-cover-wrap').css('background-image', 'url(' + data + ')');
-                        $('.add-cov-opt').hide()
+                        $('.add-cov-opt').hide();
                     }
                 })
+            })
+
+            $('#statusEmoji').emojioneArea({
+                pickPosition: "right",
+                spellcheck: true,
             })
 
             $(document).mouseup(function(e) {

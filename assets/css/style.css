@@ -616,13 +616,13 @@ img.profile-pic-me {
 }
 
 .status-prof-textarea textarea {
-  border: none;
-  padding: 0;
+  border: 1px solid #8db6e7;
+  padding: 5px;
   resize: none;
   width: 90%;
   border-radius: 5px;
   font-size: 14px;
-  background-color: #ffebeb;
+  background-color: white;
 }
 
 .status-bot {
@@ -647,4 +647,89 @@ img.profile-pic-me {
   font-weight: 600;
   color: rgba(0, 0, 0, 0.8);
   cursor: pointer;
+}
+
+.newsFeed-privacy {
+  background-color: rgba(255, 255, 255, 0.56);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+}
+
+.newsFeed {
+  display: flex;
+  align-items: center;
+}
+
+.newsfeed-icon {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: white;
+  margin-left: 10px;
+  vertical-align: middle;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.newsfeed-text {
+  font-size: 12px;
+  font-weight: 600;
+  background-color: white;
+  margin-left: 10px;
+}
+
+.privacy-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.status-privacy {
+  display: flex;
+  align-items: center;
+  border: 1px solid gray;
+  padding: 0 5px;
+  cursor: pointer;
+}
+
+.privacy-downarrow-icon img {
+  height: 12px;
+  width: 12px;
+}
+
+.privcay-text {
+  margin: 3px 2px 2px 2px;
+}
+
+.seemore-sharebutton {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.56);
+  padding: 5px 10px;
+}
+
+span.status-seemore {
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+.share-seemore-option {
+  border: 1px solid gray;
+  padding: 5px;
+  min-width: fit-content;
+}
+
+.status-share-button {
+  font-size: 14px;
+  background-color: rgb(66, 103, 178);
+  padding: 7px;
+  color: white;
+  width: 100%;
+  font-weight: 600;
+  margin-left: 10px;
+  text-align: center;
 }
