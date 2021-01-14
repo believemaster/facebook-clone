@@ -702,6 +702,7 @@ img.profile-pic-me {
 
 .privcay-text {
   margin: 3px 2px 2px 2px;
+  font-size: 13px;
 }
 
 .seemore-sharebutton {
@@ -724,12 +725,29 @@ span.status-seemore {
 }
 
 .status-share-button {
-  font-size: 14px;
+  font-size: 15px;
   background-color: rgb(66, 103, 178);
   padding: 7px;
   color: white;
   width: 100%;
   font-weight: 600;
-  margin-left: 10px;
+  margin-left: 10px 0 10px 10px;
   text-align: center;
+}
+
+ul#sortable {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.99);
+  flex-wrap: wrap;
+  position: relative;
+}
+
+#sortable li {
+  margin: 0 3px 0 3px;
+  padding: 0.233rem;
+  border-radius: 20px;
 }

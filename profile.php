@@ -433,6 +433,37 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
                 spellcheck: true,
             })
 
+            $(document).on('click', 'emojiarea-editor', function() {
+                $('.status-share-button-wrap').show('0.5');
+            });
+
+            $(document).on('click', '.status-bot', function() {
+                $('.status-share-button-wrap').show('0.5');
+            });
+
+            var fileCollection = new Array();
+
+            $(document).on('change', '#multiple_files', function(e) {
+                var count = 0;
+                var files = e.target.files;
+                $(this).removeData();
+                var text = "";
+
+                $.each(files, function(i, file) {
+                    fileCollection.push(file);
+                    var reader = new FileReader();
+
+                    reader.readAsDataURL(file);
+                    reader.onload = function(e) {
+                        var name = document.getElementById("multiple_files").files[i].name;
+                        var template = '<li class="ui-state-default del" style="position: relative;"><img id="' + name + '" style="width: 60px; height: 60px;" src="' + e.target.result + '"></li>';
+
+                        $('#sortable').append(template);
+                    }
+                })
+                $("#sortable").append("<div class='remImg' style='position: absolute; top: 0; right: 0; cursor:pointer; display: flex; justify-content: center; align-items: center; backgroumd-color: white; border-radius: 50%; height: 1rem; width: 1rem; font-size: 0.694rem'>x</div>")
+            })
+
             $(document).mouseup(function(e) {
                 var container = new Array();
                 container.push($('.add-cov-opt'));
