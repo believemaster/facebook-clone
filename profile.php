@@ -538,9 +538,9 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
                     $.post('http://localhost/facebook/core/ajax/postSubmit.php', {
                         onlyStatusText: statusText
                     }, function(data) {
-                        $('adv_dem').html(data);
+                        $('#adv_dem').html(data);
                         location.reload();
-                    })
+                    });
                 } else {
                     $.post('http://localhost/facebook/core/ajax/postSubmit.php', {
                         stIm: stIm,
@@ -548,7 +548,7 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
                     }, function(data) {
                         $('#adv_dem').html(data);
                         location.reload();
-                    })
+                    });
                 }
 
             });
