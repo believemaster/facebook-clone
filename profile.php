@@ -464,6 +464,95 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
                 $("#sortable").append("<div class='remImg' style='position: absolute; top: 0; right: 0; cursor:pointer; display: flex; justify-content: center; align-items: center; backgroumd-color: white; border-radius: 50%; height: 1rem; width: 1rem; font-size: 0.694rem'>x</div>")
             })
 
+            $(document).on('click', '.remImg', function() {
+                $('#sortable').empty();
+                $('.input-restore').empty.html('<label for="multiple_files" class="file-upload-label"><div class="status-bot-1"><img src="assets/image/photo.jpg" alt=""><div class="status-bot-text">Photo/Video</div></div></label>')
+            })
+
+            $(".status-share-button").on('click', function() {
+                var statusText = $('.emojionearea-editor').html();
+
+                var formData = new FormData();
+
+                var storeImage = [];
+                var error_images = [];
+                var files = $('#multiple_files')[0].files;
+
+                if (files.length != 0) {
+                    if (files.length > 10) {
+                        error_images += 'You cannot select more than 10 images';
+                    } else {
+                        for (var i = 0; i < files.length; i++) {
+                            var name = document.getElementById('multiple_files').files[i].name;
+                            storeImage += '{\"imageName\":\"user/' + <?php echo $userid ?> + '/postImage' + name + '\"}';
+                            var ext = name.split('.').pop().toLowerCase();
+
+                            if (jQuery.inArray(ext, ['gif', 'png', 'jpeg', 'jpg']) == -1) {
+                                error_images += "<p>Invalid " + i + " File</p>"
+                            }
+
+                            var ofReader = new FileReader;
+                            ofReader.readAsDataURL(document.getElementById('multiple_files').files[i]);
+
+                            var f = document.getElementById('multiple_files').files[i];
+                            var fsize = f.size || f.fileSize;
+
+                            if (fsize > 2000000) {
+                                error_images += '<p>' + i + ' File size is very big.</p>'
+                            } else {
+                                formData.append('file[]', document.getElementById('multiple_files').files[i])
+                            }
+                        }
+                    }
+                    if (files.length < 1) {
+
+                    } else {
+                        var str = storeImage.replace(/,\s*$/, "");
+                        var stIm = '[' + str + ']';
+                    }
+                    if (error_images == '') {
+                        $.ajax({
+                            url: 'http://localhost/facebook/core/ajax/uploadPostImage.php',
+                            method: "POST",
+                            data: formData,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            beforeSend: function() {
+                                $('#error_multiple_files').html('<br/><label>Uploading...</label>');
+                            },
+                            success: function(data) {
+                                $('#error_multiple_files').html(data);
+                                $('#sortable').empty();
+                            }
+                        })
+                    } else {
+                        $('#multiple_files_id').val('');
+                        $('#error_multiple_files').html("<span>" + error_images + "</span>")
+                        return false;
+                    }
+                } else {
+                    var stIm = '';
+                }
+                if (stIm == '') {
+                    $.post('http://localhost/facebook/core/ajax/postSubmit.php', {
+                        onlyStatusText: statusText
+                    }, function(data) {
+                        $('adv_dem').html(data);
+                        location.reload();
+                    })
+                } else {
+                    $.post('http://localhost/facebook/core/ajax/postSubmit.php', {
+                        stIm: stIm,
+                        statusText: statusText
+                    }, function(data) {
+                        $('#adv_dem').html(data);
+                        location.reload();
+                    })
+                }
+
+            });
+
             $(document).mouseup(function(e) {
                 var container = new Array();
                 container.push($('.add-cov-opt'));
