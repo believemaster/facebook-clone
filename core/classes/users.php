@@ -94,4 +94,30 @@ class User
 
         $stmt->execute();
     }
+
+    public function timeAgo($datetime)
+    {
+        $time = strtotime($datetime);
+        $current = time();
+        $seconds = $current - $time;
+        $minutes = round($seconds / 60);
+        $hours = round($seconds / 3600);
+        $months = round($seconds / 2600640);
+
+        if ($seconds <= 60) {
+            if ($seconds == 0) {
+                return "Posted Now";
+            } else {
+                return '' . $seconds . 's ago';
+            }
+        } else if ($minutes <= 60) {
+            return '' . $minutes . 'm ago';
+        } else if ($hours <= 60) {
+            return '' . $hours . 'h ago';
+        } else if ($months <= 60) {
+            return '' . date('M j', $time);
+        } else {
+            return '' . date('M j Y', $time);
+        }
+    }
 }
