@@ -59,7 +59,7 @@ class Post extends User
                                 $imgJson = json_decode($post->postImage);
                                 $count = 0;
                                 for ($i = 0; $i < count($imgJson); $i++) {
-                                    echo '<div class="post-img-box" data-postimgid="' . $post->id . '" style="max-height:400px; overflow:hidden;"><img src="' . BASE_URL . $imgJson['' . $count++ . '']->imageName . '" class="postImage" style="width: 100%; cursor: pointer;"></div>';
+                                    echo '<div class="post-img-box" data-postimgid="' . $post->id . '" style="max-height:400px; overflow:hidden;"><img src="' . BASE_URL . $imgJson['' . $count++ . '']->imageName . '" class="postImage" style="width: 100%; cursor: pointer;" data-userid="' . $user_id . '" data-postid="' . $post->post_id . '" data-profileid="' . $profileId . '"></div>';
                                 }
                                 ?>
                             </div>

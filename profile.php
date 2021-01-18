@@ -558,6 +558,21 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
 
             });
 
+            $(document).on('click', '.postImage', function() {
+                var userid = $(this).data('userid');
+                var postid = $(this).data('postid');
+                var profileid = $(this).data('profileid');
+                var imageSrc = $(this).attr('src');
+
+                $.post('http://localhost/facebook/core/ajax/imgFetchShow.php', {
+                    fetchImgInfo: userid,
+                    postid: postid,
+                    imageSrc: imageSrc
+                }, function(data) {
+                    $('.top-box-show').html(data);
+                })
+            })
+
             $(document).mouseup(function(e) {
                 var container = new Array();
                 container.push($('.add-cov-opt'));
