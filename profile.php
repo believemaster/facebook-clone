@@ -489,7 +489,7 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
                     } else {
                         for (var i = 0; i < files.length; i++) {
                             var name = document.getElementById('multiple_files').files[i].name;
-                            storeImage += '{\"imageName\":\"user/' + <?php echo $userid ?> + '/postImage' + name + '\"}';
+                            storeImage += '{\"imageName\":\"user/' + <?php echo $userid ?> + '/postImage/' + name + '\"},';
                             var ext = name.split('.').pop().toLowerCase();
 
                             if (jQuery.inArray(ext, ['gif', 'png', 'jpeg', 'jpg']) == -1) {
