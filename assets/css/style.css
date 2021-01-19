@@ -9,6 +9,10 @@ a {
   text-decoration: none;
 }
 
+li {
+  list-style: none;
+}
+
 .main {
   font-family: Arial, Helvetica, sans-serif;
   height: 100vh;
@@ -842,6 +846,7 @@ ul#sortable {
 }
 .post-option-details ul {
   margin: 5px;
+  padding: 0;
 }
 .likeReact {
   background-image: url('../images/likeReact.JPG');
