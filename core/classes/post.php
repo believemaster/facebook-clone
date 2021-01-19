@@ -20,6 +20,7 @@ class Post extends User
 
         foreach ($posts as $post) {
 ?>
+            <!-- Profile Timeline -->
             <div class="profile-timeline">
                 <div class="news-feed-comp">
                     <div class="news-feed-text">

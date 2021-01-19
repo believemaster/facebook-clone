@@ -583,7 +583,19 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
                         $(value).hide();
                     }
                 })
+            });
+
+            $(document).mouseup(function(e) {
+                var container = new Array();
+                container.push($('.post-img-wrap'));
+
+                $.each(container, function(key, value) {
+                    if (!$(value).is(e.target) && $(value).has(e.target).length === 0) {
+                        $('.top-box-show').empty();
+                    }
+                })
             })
+
         });
     </script>
 </body>
