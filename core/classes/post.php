@@ -19,6 +19,8 @@ class Post extends User
         $posts = $stmt->fetchAll(PDO::FETCH_OBJ);
 
         foreach ($posts as $post) {
+
+            $main_react = $this->main_react($user_id, $post->post_id);
 ?>
             <!-- Profile Timeline -->
             <div class="profile-timeline">
@@ -69,14 +71,26 @@ class Post extends User
 
                         </div>
                         <div class="nf-4">
-                            <div class="like-action-wrap">
+                            <div class="like-action-wrap" data-postid="<?php echo $post->post_id; ?>" data-userid="<?php $user_id ?>" style="position: relative;">
+                                <div class="react-bundle-wrap">
+
+                                </div>
                                 <div class="like-action ra">
-                                    <div class="like-action-icon">
-                                        <img src="assets/image/likeAction.jpg" alt="">
-                                    </div>
-                                    <div class="like-action-text">
-                                        <span>Like</span>
-                                    </div>
+                                    <?php if (empty($main_react)) { ?>
+                                        <div class="like-action-icon">
+                                            <img src="assets/image/likeAction.jpg" alt="">
+                                        </div>
+                                        <div class="like-action-text">
+                                            <span>Like</span>
+                                        </div>
+                                    <?php } else { ?>
+                                        <div class="like-action-icon">
+                                            <img src="assets/image/react/<?php echo $main_react->reactType; ?>.png" alt="" class="reactIconSize">
+                                            <div class="like-action-text">
+                                                <span><?php echo $main_react->reactType; ?></span>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="comment-action ra">
@@ -114,6 +128,16 @@ class Post extends User
         $stmt->bindParam(":user_id", $user_id, PDO::PARAM_INT);
         $stmt->bindParam(":editText", $editText, PDO::PARAM_INT);
         $stmt->execute();
+    }
+
+    public function main_react($userid, $postid)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM `react` WHERE `reactBy` = :user_id AND `reactOn` = :postid AND `reactCommentOn`='0' AND `reactReplyOn`='0' ");
+        $stmt->bindParam(":user_id", $userid, PDO::PARAM_INT);
+        $stmt->bindParam(":postid", $postid, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_OBJ);
     }
 }
 ?>

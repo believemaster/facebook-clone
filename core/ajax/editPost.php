@@ -12,7 +12,7 @@ if (isset($_POST['editedTextVal'])) {
 
     $loadFromPost->postUpd($userid, $postid, $editedTextVal);
 
-    echo $editedTextVal;
+    // echo $editedTextVal;
 }
 
 if (isset($_POST['deletePost'])) {
