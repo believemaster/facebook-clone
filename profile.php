@@ -619,8 +619,68 @@ if (isset($_GET['username']) == true && empty($_GET['username']) == false) {
 
             // Main React
 
+            $(document).on('click', '.like-action', function() {
+                var likeActionIcon = $(this).find('.like-action-icon img');
+                var likeReactParent = $(this).parents('.like-action-wrap');
+                var nf4 = $(likeReactParent).parents('.nf-4');
+                var nf_3 = $(nf4).siblings('.nf-3').find('.react-count-wrap');
+                var reactCount = $(nf4).siblings('.nf-3').find('.nf-3-react-username');
+                var reactCount = $(nf4).siblings('.nf-3').find('.nf-3-react-username');
+                var reactNumText = $(reactCount).text();
+                var postId = $(likeReactParent).data('postid');
+                var userId = $(likeReactParent).data('userid');
+                var typeText = $(this).find('.like-action-text span');
+                var typeR = $(typeText).text();
+                var spanClass = $(this).find('.like-action-text').find('span');
 
+                if ($(spanClass).attr('class') !== undefined) {
+                    if ($(likeActionIcon).attr('src') == 'assets/image/likeAction.jpg') {
+                        (spanClass).addClass('like-color');
+                        $(likeActionIcon).attr('src', 'assets/image/react/like.png').addClass('reactIconSize');
+                        spanClass.text('like');
+                        mainReactSubmit(typeR, postId, userId, nf_3);
+                    } else {
+                        $(likeActionIcon).attr('src', 'assets/image/likeAction.jpg');
+                        spanClass.removeClass();
+                        spanClass.text('Like');
+                        mainReactDelete(typeR, postId, userId, nf_3);
+                    }
+                } else if ($(spanClass).attr('class') !== undefined) {
+                    (spanClass).addClass('like-color');
+                    $(likeActionIcon).attr('src', 'assets/image/react/like.png').addClass('reactIconSize');
+                    spanClass.text('like');
+                    mainReactSubmit(typeR, postId, userId, nf_3);
+                } else {
+                    (spanClass).addClass('like-color');
+                    $(likeActionIcon).attr('src', 'assets/image/react/like.png').addClass('reactIconSize');
+                    spanClass.text('like');
+                    mainReactSubmit(typeR, postId, userId, nf_3);
+                }
+            });
 
+            function mainReactSubmit(typeR, postId, userId, nf_3) {
+                var profileid = "<?php echo $profileId; ?>";
+                $.post('http://localhost/facebook/core/ajax/react.php', {
+                    reactType: typeR,
+                    postId: postId,
+                    userId: userId,
+                    profileid: profileid
+                }, function(data) {
+                    $(nf_3).empty().html(data);
+                });
+            }
+
+            function mainReactSubmit(typeR, postId, userId, nf_3) {
+                var profileid = "<?php echo $profileId; ?>";
+                $.post('http://localhost/facebook/core/ajax/react.php', {
+                    deleteReactType: typeR,
+                    postId: postId,
+                    userId: userId,
+                    profileid: profileid
+                }, function(data) {
+                    $(nf_3).empty().html(data);
+                });
+            }
             // Main React End
 
             $(document).on('click', '.postImage', function() {

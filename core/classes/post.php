@@ -21,6 +21,8 @@ class Post extends User
         foreach ($posts as $post) {
 
             $main_react = $this->main_react($user_id, $post->post_id);
+            $reat_max_show = $this->react_max_show($post->post_id);
+            $main_react_count = $this->main_react_count($post->post_id);
 ?>
             <!-- Profile Timeline -->
             <div class="profile-timeline">
@@ -68,7 +70,23 @@ class Post extends User
                             </div>
                         </div>
                         <div class="nf-3">
-
+                            <div class="react-comment-count-wrap" style="width: 100%; display:flex; justify-content: space-between; align-items:center;">
+                                <div class="react-count-wrap align-middle">
+                                    <div class="nf-3-react-icon">
+                                        <div class="react-inst-img align-middle">
+                                            <?php foreach ($reat_max_show as $react_max) {
+                                                echo '<img class="' . $react_max->reacType . '-max-show" src="assets/immage/react/' . $react_max->reactType . '.png" alt="" style="height: 15px; width: 15px; margin-right:2px; cursor:pointer;">';
+                                            } ?>
+                                        </div>
+                                    </div>
+                                    <div class="nf-3-react-username">
+                                        <?php if ($main_react_count->maxreact == '0') {
+                                        } else {
+                                            echo $main_react_count->maxreact;
+                                        } ?>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="nf-4">
                             <div class="like-action-wrap" data-postid="<?php echo $post->post_id; ?>" data-userid="<?php $user_id ?>" style="position: relative;">
@@ -84,10 +102,10 @@ class Post extends User
                                             <span>Like</span>
                                         </div>
                                     <?php } else { ?>
-                                        <div class="like-action-icon">
-                                            <img src="assets/image/react/<?php echo $main_react->reactType; ?>.png" alt="" class="reactIconSize">
+                                        <div class="like-action-icon" style="display: flex; align-items:center;">
+                                            <img src="assets/image/react/<?php echo $main_react->reactType; ?>.png" alt="" class="reactIconSize" style="margin-top: 0;">
                                             <div class="like-action-text">
-                                                <span><?php echo $main_react->reactType; ?></span>
+                                                <span class="<?php echo $main_react->reactType; ?>-color"><?php echo $main_react->reactType; ?></span>
                                             </div>
                                         </div>
                                     <?php } ?>
@@ -134,6 +152,24 @@ class Post extends User
     {
         $stmt = $this->pdo->prepare("SELECT * FROM `react` WHERE `reactBy` = :user_id AND `reactOn` = :postid AND `reactCommentOn`='0' AND `reactReplyOn`='0' ");
         $stmt->bindParam(":user_id", $userid, PDO::PARAM_INT);
+        $stmt->bindParam(":postid", $postid, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+    public function react_max_show($postid)
+    {
+        $stmt = $this->pdo->prepare("SELECT reactType, count(*) as maxreact from react WHERE reactOn=: postid AND reactCommentOn = '0' AND reactReplyOn = '0' GROUP BY reactType LIMIT 3");
+        $stmt->bindParam(":postid", $postid, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function main_react_count($postid)
+    {
+        $stmt = $this->pdo->prepare("SELECT count(*) as maxreact from react WHERE reactOn=: postid AND reactCommentOn = '0' AND reactReplyOn = '0'");
         $stmt->bindParam(":postid", $postid, PDO::PARAM_INT);
         $stmt->execute();
 
